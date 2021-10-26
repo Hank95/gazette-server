@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.user, { foreignKey: "user_id" });
-      this.belongsTo(models.list, { foreignKey: "list_id" });
+      this.belongsTo(models.User, { foreignKey: "user_id" });
+      this.belongsTo(models.List, { foreignKey: "list_id" });
     }
     toJSON() {
       return { ...this.get(), id: undefined };

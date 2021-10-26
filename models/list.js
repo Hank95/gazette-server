@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.list_items, { foreignKey: "list_id" });
-      this.hasMany(models.approved_users, { foreignKey: "list_id" });
+      this.hasMany(models.List_items, { foreignKey: "list_id" });
+      this.hasMany(models.Approved_users, { foreignKey: "list_id" });
     }
     toJSON() {
       return { ...this.get(), id: undefined };
@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   List.init(
     {
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
