@@ -20,6 +20,24 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
+app.get("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const currentUser = await user.findOne({ username: username });
+    if (currentUser.password === password) {
+      return res.json(currentUser);
+    } else {
+      return res.json({ error: "Password Incorrect" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ error: "Something went wrong", details: err });
+  }
+});
+
 app.get("/api/users", async (req, res) => {
   try {
     const users = await user.findAll();
