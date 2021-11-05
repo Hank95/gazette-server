@@ -1,17 +1,19 @@
 const express = require("express");
+const cors = require("cors");
 
-const { sequelize, user } = require("./models");
+const { sequelize, User } = require("./models");
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
-app.post("/api/register", async (req, res) => {
+app.post("/api/signup", async (req, res) => {
   const { username, email, password } = req.body;
   console.log(req.body);
 
   try {
-    const newUser = await user.create({ username, email, password });
+    const newUser = await User.create({ username, email, password });
 
     return res.json(newUser);
   } catch (err) {
@@ -24,7 +26,7 @@ app.get("/api/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const currentUser = await user.findOne({ username: username });
+    const currentUser = await User.findOne({ username: username });
     if (currentUser.password === password) {
       return res.json(currentUser);
     } else {
@@ -40,7 +42,7 @@ app.get("/api/login", async (req, res) => {
 
 app.get("/api/users", async (req, res) => {
   try {
-    const users = await user.findAll();
+    const users = await User.findAll();
 
     return res.json(users);
   } catch (err) {
